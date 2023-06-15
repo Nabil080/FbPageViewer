@@ -1,77 +1,56 @@
+<?php require('Post.php') ?>
+<?php require('Api.php') ?>
+<?php 
+$Api = new Api();
+$posts = $Api->getAllPosts();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Facebook API</title>
+
+    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-500">
+<body class="">
+
+<!-- FAKE NAV BAR -->
+    <nav class="w-full h-24 grid place-items-center border">NAV BAR</nav>
+<!-- FAKE NAV BAR -->
 
 
+<!-- FAKE HEADER -->
+    <section class="w-full h-36 relative" style="background-image:url(https://actualite.veronique-belleville.fr/wp-content/themes/corporate-key/images/custom-header.jpg)">
+        <div class="w-full h-full absolute bg-black bg-opacity-40 grid place-items-center">
+            <p class="text-white font-bold text-xl">HEADER</p>
+        </div>
+    </section>
+<!-- FAKE HEADER -->
 
-<section class="flex flex-wrap gap-12 justify-center">
-    <?php
-    $id="109157512212506";
-    $token="EAALYeThbMVUBAO4Hq2ZA6naEIxFdNx1xYqnqZCpPBhOmSdK4HZBhZBLBkOARDq7Cir2sgQYfjZCZBcuY5S2S3suo2DtbFV7ZAipdqsdXDM899SJGbRAUflESnkB3gsYfs70etY6UdNZBuDhJIBSaR8qHa7IxjBSfPqnCNsux7ZCc0ZBkMt68TbDMns4H8egEELcc9NJdiDG6mvTonZCJz3sTlAI";
-
-    $url = "https://graph.facebook.com/v12.0/$id/posts?fields=message,created_time,attachments&access_token=$token";
-    $response = file_get_contents($url);
-    
-
-
-    if ($response !== false) {
-        $data = json_decode($response, true);
-        $posts = $data['data'];
-        // var_dump($data);
-
-        foreach ($posts as $post) {
-            // définit les variables
-            $message = isset($post['message']) ? $post['message'] : "Inconnu" ;
-            $createdTime = new DateTime($post['created_time']);
-            $images = [];
-            if(isset($post['attachments'])){
-                if(isset($post['attachments']['data'][0]['subattachments'])){
-                $imagesData = $post['attachments']['data'][0]['subattachments']['data'];
-                    foreach ($imagesData as $imageData){
-                        if($imageData['type'] === "photo"){
-                            $images[] = $imageData['media']['image']['src'];
-                        }
-                    }
-                }else{
-                    $images[] = $post['attachments']['data'][0]['media']['image']['src'];
-                }
+<!-- 
+---
+SECTION ARTICLE
+---
+-->
+    <section class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto">
+        <?php
+            foreach ($posts as $post) {
+                echo $post->getPostCard();
             }
-            ?>
+        ?>
+    </section>
+<!-- 
+---
+SECTION ARTICLE
+---
+-->
 
-            <article class="w-[500px] [&_img]:w-[500px] border ">
-                <div class="slider-container flex w-[500px] h-[400px] overflow-scroll scroll-smooth">
-                    <?php         
-                        if(!empty($images)){
-                            foreach($images as $image){ ?>
-                                <img src='<?=$image?>' class="object-cover">
-                            <?php }
-                        }else{ 
-                            echo '<img src="logo.png">';
-                        }
-                    ?>
-                </div>
-                <div class="flex justify-between">
-                    <h2><?=$message?></h2>
-                    <p><?=$createdTime->format('j F Y')?></p>
-                </div>
-            </article>
-
-            <?php
-        }
-
-        
-    } else {
-        echo "Il y a eu une erreur";
-    }
-    ?>
-</section>
-
-
+<!-- SLIDER -->
+<script src="slider.js"></script>
 </body>
 </html>
