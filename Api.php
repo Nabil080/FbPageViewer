@@ -1,11 +1,15 @@
 <?php
 require_once 'config.php';
+require_once 'Post.php';
 
 class Api{
     private string $token = API_TOKEN;
     private string $id = "109157512212506";
     private string $params = "posts?fields=message,created_time,attachments";
+    private int $limit = 6;
     private string $url;
+    public string $previousUrl = "";
+    public string $nextUrl = "";
 
     // -------------------- GETTERS --------------------
 
@@ -42,35 +46,43 @@ class Api{
     }
 
     // --------------------- METHODS ------------------
-    public function getUrl(string $id = null ,string $token = null, string $params = null):string
+    public function getUrl(int $limit = null, string $id = null ,string $token = null, string $params = null):string
     {
         if($id === null){ $id = $this->id;}
         if($token === null){ $token = $this->token;}
+        if($limit === null){ $limit = $this->limit;}
         if($params === null){ $params = $this->params;}
 
-        return $this->url = "https://graph.facebook.com/v12.0/$id/$params&access_token=$token";
+        return $this->url = "https://graph.facebook.com/v12.0/$id/$params&access_token=$token&limit=$limit";
     }
 
-    public function getDatas():array
+    public function getDatas(int $limit, string $url):array
     {
-        $response = file_get_contents($this->getUrl());
+        $response = file_get_contents($url);
 
         if ($response !== false) {
             $data = json_decode($response, true);
 
-            return $data['data'];
+            return $data;
         } else {
 
             return [];
         }
     }
 
-    public function getAllPosts():array
+    public function getAllPosts(int $limit = null, string $url = null):array
     {
-        $datas = $this->getDatas();
-        $posts = [];
+        if($limit === null){ $limit = $this->limit;}
+        if($url === null){ $url = $this->getUrl($limit);} 
+        $datas = $this->getDatas($limit,$url);
+        $postsData = $datas['data'];
+        $paginationData = $datas['paging'];
 
-        foreach ($datas as $post) {
+        if(isset($paginationData['next'])){$this->nextUrl = $paginationData['next'];}
+        if(isset($paginationData['previous'])){$this->previousUrl = $paginationData['previous'];}
+
+        $posts = [];
+        foreach ($postsData as $post) {
             $message = isset($post['message']) ? $post['message'] : "Inconnu" ;
             $createdTime = $post['created_time'];
 

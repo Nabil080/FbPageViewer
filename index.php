@@ -2,7 +2,7 @@
 <?php require('Api.php') ?>
 <?php 
 $Api = new Api();
-$posts = $Api->getAllPosts();
+$posts = $Api->getAllPosts(2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,13 +37,16 @@ $posts = $Api->getAllPosts();
 SECTION ARTICLE
 ---
 -->
-    <section class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto">
-        <?php
-            foreach ($posts as $post) {
-                echo $post->getPostCard();
-            }
-        ?>
+    <section id="posts-section" class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto">
+        <!-- Cards récupérés en AJAX dans pagination.js et pagination.php -->
     </section>
+    <div class="pagination max-w-[1300px] mx-auto my-4 flex justify-between">
+        <?php if(isset($Api->previousUrl)){ ?>
+            <button id="prev-page" data-url="<?=$Api->previousUrl?>" class="mr-auto">Précédent</button>
+        <?php }; if(isset($Api->nextUrl)){ ?>
+            <button id="next-page" data-url="<?=$Api->nextUrl?>" class="ml-auto">Suivant</button>
+        <?php } ?>
+    </div>
 <!-- 
 ---
 SECTION ARTICLE
@@ -52,5 +55,9 @@ SECTION ARTICLE
 
 <!-- SLIDER -->
 <script src="slider.js"></script>
+
+<!-- PAGINATION -->
+<script src="pagination.js"></script>
+
 </body>
 </html>

@@ -55,7 +55,7 @@ class Post{
         $w = "w-[$width]";
         $hasSlider = isset($this->images[1]) ? true : false;
         ob_start() ?>
-            <article class="post-card <?=$w?> [&_img]:<?=$w?> border relative h-[500px] ">
+            <article class="post-card <?=$w?> border relative h-[500px] ">
                 <?php
                     if($hasSlider){ ?>
                         <div class="absolute left-2 top-0 h-3/5 grid place-items-center z-10">
@@ -66,7 +66,7 @@ class Post{
                 <div class="slider-container flex <?=$w?> h-3/5 overflow-hidden scroll-smooth relative">
                     <?php         
                         foreach($this->getImages() as $image){ ?>
-                            <img src='<?=$image?>' class="object-cover">
+                            <img src='<?=$image?>' class="object-cover <?=$w?>">
                         <?php }
                     ?>
                 </div>
@@ -83,7 +83,7 @@ class Post{
                     <h2 class="line-clamp-4"><?=$this->message?></h2>
                     <div class="text-orange-500 flex justify-between">
                         <div><?=$this->formateDate()?></div>
-                        <button class="underline">Voir plus</button>
+                        <button class="more-info underline">Voir plus</button>
                     </div>
                 </div>
             </article>
