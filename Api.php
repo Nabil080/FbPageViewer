@@ -27,6 +27,10 @@ class Api{
     {
         return $this->params;
     }
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
     // -------------------- SETTERS --------------------
 
@@ -46,7 +50,7 @@ class Api{
     }
 
     // --------------------- METHODS ------------------
-    public function getUrl(int $limit = null, string $id = null ,string $token = null, string $params = null):string
+    public function setUrl(int $limit = null, string $id = null ,string $token = null, string $params = null):string
     {
         if($id === null){ $id = $this->id;}
         if($token === null){ $token = $this->token;}
@@ -65,6 +69,11 @@ class Api{
 
             return $data;
         } else {
+            $response = array(
+                "status" => "failure",
+                "message" => "Echec de la récupération des données",
+            );
+            echo json_encode($response);
 
             return [];
         }
@@ -73,10 +82,11 @@ class Api{
     public function getAllPosts(int $limit = null, string $url = null):array
     {
         if($limit === null){ $limit = $this->limit;}
-        if($url === null){ $url = $this->getUrl($limit);} 
+        if($url === null){ $url = $this->setUrl($limit);} 
         $datas = $this->getDatas($limit,$url);
+
         $postsData = $datas['data'];
-        $paginationData = $datas['paging'];
+        if(isset($datas['paging'])){$paginationData = $datas['paging'];}
 
         if(isset($paginationData['next'])){$this->nextUrl = $paginationData['next'];}
         if(isset($paginationData['previous'])){$this->previousUrl = $paginationData['previous'];}

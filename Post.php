@@ -5,14 +5,20 @@ class Post{
     private string $message;
     private array|string $images;
     private string $date;
+    private string $id;
 
     public function __construct(string $message, array|string $images, string $date){
+        $this->setId();
         $this->message = $message;
         $this->images = $images;
         $this->date = $date;
     }
     
     // -------------- GETTERS
+    public function getId():string
+    {
+        return $this->id;
+    }
 
     public function getMessage():string
     {
@@ -31,6 +37,10 @@ class Post{
     }
 
     // -------------- SETTERS
+    public function setId():void
+    {
+        $this->id = bin2hex(random_bytes(8));
+    }
 
     public function setMessage(string $message):void
     {
@@ -55,7 +65,7 @@ class Post{
         $w = "w-[$width]";
         $hasSlider = isset($this->images[1]) ? true : false;
         ob_start() ?>
-            <article class="post-card <?=$w?> border relative h-[500px] ">
+            <article id="post-<?=$this->id?>" class="post-card <?=$w?> border relative h-[500px]">
                 <?php
                     if($hasSlider){ ?>
                         <div class="absolute left-2 top-0 h-3/5 grid place-items-center z-10">
@@ -66,7 +76,7 @@ class Post{
                 <div class="slider-container flex <?=$w?> h-3/5 overflow-hidden scroll-smooth relative">
                     <?php         
                         foreach($this->getImages() as $image){ ?>
-                            <img src='<?=$image?>' class="object-cover <?=$w?>">
+                            <img src='<?=$image?>' class="post-image object-cover <?=$w?>">
                         <?php }
                     ?>
                 </div>
@@ -76,14 +86,14 @@ class Post{
                         <div class="absolute right-2 top-0 h-3/5 grid place-items-center z-10">
                             <button class="next-image text-white font-bold text-xl"><i class="fa fa-chevron-right"></i></button>
                         </div>
-                        <div class="image-counter absolute top-0 right-0 h-3/5 text-white font-bold text-lg"></div>
+                        <div class="image-counter absolute top-2 right-2 h-3/5 text-white font-bold text-lg"></div>
                     <?php }
                 ?>
                 <div class="p-4 h-2/5 flex flex-col justify-between overflow-hidden">
-                    <h2 class="line-clamp-4"><?=$this->message?></h2>
+                    <h3 class="line-clamp-4"><?=$this->message?></h3>
                     <div class="text-orange-500 flex justify-between">
                         <div><?=$this->formateDate()?></div>
-                        <button class="more-info underline">Voir plus</button>
+                        <button class="more-info underline" data-post-id="post-<?=$this->id?>">Voir plus</button>
                     </div>
                 </div>
             </article>
@@ -102,5 +112,4 @@ class Post{
         return $formattedDate;
 
     }
-
 }

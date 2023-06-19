@@ -12,7 +12,6 @@ if(!empty($data->url)){
     $posts = $Api->getAllPosts($limit);
 }
 
-
 ob_start();
     foreach ($posts as $post) {
         echo $post->getPostCard();
