@@ -66,7 +66,7 @@ class Post{
         $w = "sm:w-[$width]";
         $hasSlider = isset($this->images[1]) ? true : false;
         ob_start() ?>
-            <article id="post-<?=$this->id?>" class="post-card <?=$small?> <?=$w?> border relative h-[500px]">
+            <article id="post-<?=$this->id?>" class="post-card <?=$small?> <?=$w?> border border-black box-content relative h-[500px] bg-gray-100 ">
                 <?php
                     if($hasSlider){ ?>
                         <div class="absolute left-2 top-0 h-3/5 grid place-items-center z-10">
@@ -94,7 +94,7 @@ class Post{
                     <h3 class="line-clamp-4"><?=$this->message?></h3>
                     <div class="text-orange-500 flex justify-between">
                         <div><?=$this->formateDate()?></div>
-                        <button class="more-info underline" data-post-id="post-<?=$this->id?>">Voir plus</button>
+                        <button class="more-info underline hover:text-orange-700" data-post-id="post-<?=$this->id?>">Voir plus</button>
                     </div>
                 </div>
             </article>
