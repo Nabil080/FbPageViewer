@@ -5,7 +5,7 @@ $data = file_get_contents('php://input');
 $data = json_decode($data);
 
 $Api = new Api;
-$limit = 3;
+$limit = 6;
 if(!empty($data->url)){
     $posts = $Api->getAllPosts($limit,$data->url);
 }else{

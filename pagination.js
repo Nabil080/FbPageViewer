@@ -53,5 +53,3 @@ function managePagination()
     }
     updateData()
 }
-
-managePagination()

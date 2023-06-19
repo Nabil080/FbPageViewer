@@ -62,10 +62,11 @@ class Post{
     public function getPostCard():string
     {
         $width = "400px";
-        $w = "w-[$width]";
+        $small = "w-[300px]";
+        $w = "sm:w-[$width]";
         $hasSlider = isset($this->images[1]) ? true : false;
         ob_start() ?>
-            <article id="post-<?=$this->id?>" class="post-card <?=$w?> border relative h-[500px]">
+            <article id="post-<?=$this->id?>" class="post-card <?=$small?> <?=$w?> border relative h-[500px]">
                 <?php
                     if($hasSlider){ ?>
                         <div class="absolute left-2 top-0 h-3/5 grid place-items-center z-10">
@@ -73,10 +74,10 @@ class Post{
                         </div>
                     <?php }
                 ?>
-                <div class="slider-container flex <?=$w?> h-3/5 overflow-hidden scroll-smooth relative">
+                <div class="slider-container flex <?=$small?> <?=$w?> h-3/5 overflow-hidden scroll-smooth relative">
                     <?php         
                         foreach($this->getImages() as $image){ ?>
-                            <img src='<?=$image?>' class="post-image object-cover <?=$w?>">
+                            <img src='<?=$image?>' class="post-image object-cover <?=$small?> <?=$w?>">
                         <?php }
                     ?>
                 </div>

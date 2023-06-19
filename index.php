@@ -1,9 +1,5 @@
-<?php require('Post.php') ?>
-<?php require('Api.php') ?>
-<?php 
-$Api = new Api();
-$posts = $Api->getAllPosts(2);
-?>
+<?php require('Api.php');
+$img = "https://scontent.fsxb1-1.fna.fbcdn.net/v/t39.30808-6/354040923_114421415013616_3379430468213691418_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=RibXwI7xLuYAX-n41Ni&_nc_ht=scontent.fsxb1-1.fna&edm=AKIiGfEEAAAA&oh=00_AfAPc01KkW9p7Lfsg5nlPylA2CwzprrDn7QzxCZ_LzbP3g&oe=64951054";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,15 +33,12 @@ $posts = $Api->getAllPosts(2);
 SECTION ARTICLE
 ---
 -->
-    <section id="posts-section" class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto">
-        <!-- Cards récupérés en AJAX dans pagination.js et pagination.php -->
+    <section id="posts-section" class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto my-12">
+        <!-- Cards récupérées en AJAX dans pagination.js et pagination.php -->
     </section>
     <div class="pagination max-w-[1300px] mx-auto my-4 flex justify-between">
-        <?php if(isset($Api->previousUrl)){ ?>
-            <button id="prev-page" data-url="<?=$Api->previousUrl?>" class="mr-auto">Précédent</button>
-        <?php }; if(isset($Api->nextUrl)){ ?>
-            <button id="next-page" data-url="<?=$Api->nextUrl?>" class="ml-auto">Suivant</button>
-        <?php } ?>
+            <button id="prev-page" data-url="" class="mr-auto">Précédent</button>
+            <button id="next-page" data-url="" class="ml-auto">Voir plus de publications</button>
     </div>
 <!-- 
 ---
@@ -54,64 +47,38 @@ SECTION ARTICLE
 -->
 
 <!-- MODAL voir plus -->
-<section id="more-info" class="fixed hidden inset-0 z-30 bg-black bg-opacity-50 grid place-items-center">
-    <div class="relative bg-white w-4/5 h-4/5 p-10">
-        <div class="w-full flex justify-end"><i class="fa fa-xmark m-4 cursor-pointer"></i></div>
-        <div class="flex flex-col">
-            <div id="modal-slider-container" class="h-3/5 w-full overflow-hidden">
-                <div id="modal-slider" class="flex h-3/5 overflow-scroll scroll-smooth relative">
-                    <!-- img en js -->
-                </div>
-            </div>
-            <div id="modal-text" class="h-grow">
-                <!-- texte en js -->
-            </div>
+<dialog id="modal-info" class="hidden xl:w-1/2 md:h-4/5 p-6 grid fixed">
+    <button id="close-modal" class="absolute top-2 right-2"><i class="fa fa-xmark"></i></button>
+    <div class="overflow-y-scroll [&>*]:mx-auto p-6 border relative">
+        <div>
+            <p id="modal-text">
+                <!-- texte rempli en JS dans modal.js -->
+            </p>
+        </div>
+        <div id="modal-images" class="grid gap-6 place-items-center mt-4">
+                <!-- images remplies en JS dans modal.js -->
         </div>
     </div>
-</section>
+</dialog>
 <!-- MODAL voir plus -->
 
 
-<!-- MODAL -->
-<script>
-    function manageInfoModal()
-    {
-        const modalDiv = document.querySelector('#more-info')
-        const modalSlider = document.querySelector('#modal-slider')
-        const modalText = modalDiv.querySelector('#modal-text')
-        const modalButtons = document.querySelectorAll('.more-info')
-        const modalClose = modalDiv.querySelector('.fa-xmark')
-    
-        modalButtons.forEach(button => button.addEventListener('click', event => openModal(event)))
-        modalClose.addEventListener('click', closeModal)
-    
-        function openModal(event){
-            let post = document.querySelector(`#${event.target.dataset.postId}`)
-            let postImages = post.querySelectorAll('.post-image')
-            let postMessage = post.querySelector('h3').innerText
 
-            modalDiv.classList.remove('hidden')
-            modalText.innerText = postMessage
-            modalSlider.innerHTML = ""
-            postImages.forEach(image => modalSlider.innerHTML += 
-            `
-            <img src='${image.src}' class="post-image object-cover m-auto max-h-full">
-            `)
 
-        }
-        
-        function closeModal(){
-            modalDiv.classList.add('hidden')
-        }
-    }
-</script>
-
+<!-- PAGINATION -->
+<script src="pagination.js"></script>
 
 <!-- SLIDER -->
 <script src="slider.js"></script>
 
-<!-- PAGINATION -->
-<script src="pagination.js"></script>
+<!-- MODAL -->
+<script src="modal.js"></script>
+
+<script>
+    managePagination()
+    manageCards()
+    manageInfoModal()
+</script>
 
 </body>
 </html>
