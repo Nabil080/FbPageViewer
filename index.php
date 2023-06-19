@@ -33,10 +33,10 @@ $img = "https://scontent.fsxb1-1.fna.fbcdn.net/v/t39.30808-6/354040923_114421415
 SECTION ARTICLE
 ---
 -->
-    <section id="posts-section" class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto my-12">
+    <section id="posts-section" class="flex flex-wrap gap-12 justify-center max-w-[1300px] mx-auto mt-12">
         <!-- Cards récupérées en AJAX dans pagination.js et pagination.php -->
     </section>
-    <div class="pagination max-w-[1300px] mx-auto my-4 flex justify-between">
+    <div class="pagination max-w-[1300px] mx-auto my-4 flex justify-between mb-12">
             <button id="prev-page" data-url="" class="mr-auto">Précédent</button>
             <button id="next-page" data-url="" class="ml-auto">Voir plus de publications</button>
     </div>
@@ -61,6 +61,10 @@ SECTION ARTICLE
     </div>
 </dialog>
 <!-- MODAL voir plus -->
+
+<!-- FAKE FOOTER -->
+<div class="w-full h-16 grid place-items-center bg-black text-white">FOOTER</div>
+<!-- FAKE FOOTER -->
 
 
 
