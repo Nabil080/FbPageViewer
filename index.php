@@ -49,13 +49,13 @@ SECTION ARTICLE
 <!-- MODAL voir plus -->
 <dialog id="modal-info" class="hidden xl:w-1/2 md:h-4/5 p-6 grid fixed">
     <button id="close-modal" class="absolute top-2 right-2"><i class="fa fa-xmark"></i></button>
-    <div class="overflow-y-scroll [&>*]:mx-auto p-6 border relative">
+    <div class="overflow-y-scroll [&>*]:mx-auto p-6 border relative flex flex-col ">
         <div>
             <p id="modal-text">
                 <!-- texte rempli en JS dans modal.js -->
             </p>
         </div>
-        <div id="modal-images" class="grid gap-6 place-items-center mt-4">
+        <div id="modal-images" class="grid gap-6 place-items-center mt-4 grow">
                 <!-- images remplies en JS dans modal.js -->
         </div>
     </div>
