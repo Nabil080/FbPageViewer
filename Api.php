@@ -3,51 +3,17 @@ require_once 'config.php';
 require_once 'Post.php';
 
 class Api{
+    // token définit dans config.php
     private string $token = API_TOKEN;
-    private string $id = "109157512212506";
+    // ? id de l'utilisateur ou de la page
+    private string $id = "1506545596243050";
+    // "me" pour l'auteur du token
+    // private string $id = "me";
     private string $params = "posts?fields=message,created_time,attachments";
     private int $limit = 6;
     private string $url;
     public string $previousUrl = "";
     public string $nextUrl = "";
-
-    // -------------------- GETTERS --------------------
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    public function getParams()
-    {
-        return $this->params;
-    }
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    // -------------------- SETTERS --------------------
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
-
-    public function setParams($token)
-    {
-        $this->token = $token;
-    }
 
     // --------------------- METHODS ------------------
     public function setUrl(int $limit = null, string $id = null ,string $token = null, string $params = null):string
@@ -94,6 +60,7 @@ class Api{
         $posts = [];
         foreach ($postsData as $post) {
             $message = isset($post['message']) ? $post['message'] : "Inconnu" ;
+            $postIsValid = $message === "Inconnu" ? false : true;
             $createdTime = $post['created_time'];
 
             $images = [];
@@ -110,8 +77,10 @@ class Api{
                 }
             }
 
-            $Post = new Post($message,$images,$createdTime);
-            $posts[] = $Post;
+            if($postIsValid){
+                $Post = new Post($message,$images,$createdTime);
+                $posts[] = $Post;
+            }
         }
 
         return $posts;

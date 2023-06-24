@@ -41,15 +41,5 @@ function managePagination()
             manageInfoModal()
         })
     }
-    function showLess()
-    {
-        const posts = postsSectionDiv.querySelectorAll('.post-card')
-        let postsCount = posts.length
-        let startIndex = postsCount - 3
-        for(let i = startIndex; i < postsCount; i++ ){
-            console.log(i)
-            posts[i].remove()
-        }
-    }
     updateData()
 }

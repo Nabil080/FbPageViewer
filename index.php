@@ -1,5 +1,4 @@
-<?php require('Api.php');
-$img = "https://scontent.fsxb1-1.fna.fbcdn.net/v/t39.30808-6/354040923_114421415013616_3379430468213691418_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=RibXwI7xLuYAX-n41Ni&_nc_ht=scontent.fsxb1-1.fna&edm=AKIiGfEEAAAA&oh=00_AfAPc01KkW9p7Lfsg5nlPylA2CwzprrDn7QzxCZ_LzbP3g&oe=64951054";?>
+<?php require('Api.php');?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
