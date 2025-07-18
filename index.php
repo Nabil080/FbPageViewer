@@ -1,4 +1,4 @@
-<?php require('Api.php');?>
+<?php require ('Api.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
